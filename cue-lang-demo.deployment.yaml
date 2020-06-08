@@ -7,7 +7,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -16,7 +16,7 @@ spec:
     matchLabels:
       component: hub
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
 ---
 # Source: jupyterhub/templates/proxy/pdb.yaml
 apiVersion: policy/v1beta1
@@ -26,7 +26,7 @@ metadata:
   labels:
     component: proxy
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -35,7 +35,7 @@ spec:
     matchLabels:
       component: proxy
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
 ---
 # Source: jupyterhub/templates/scheduling/user-placeholder/pdb.yaml
 apiVersion: policy/v1beta1
@@ -45,7 +45,7 @@ metadata:
   labels:
     component: user-placeholder
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -54,7 +54,7 @@ spec:
     matchLabels:
       component: user-placeholder
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
 ---
 # Source: jupyterhub/templates/scheduling/user-scheduler/pdb.yaml
 apiVersion: policy/v1beta1
@@ -64,7 +64,7 @@ metadata:
   labels:
     component: user-scheduler
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -73,7 +73,7 @@ spec:
     matchLabels:
       component: user-scheduler
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
 ---
 # Source: jupyterhub/templates/hub/rbac.yaml
 apiVersion: v1
@@ -83,7 +83,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 ---
@@ -95,7 +95,7 @@ metadata:
   labels:
     component: user-scheduler
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 ---
@@ -107,7 +107,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 type: Opaque
@@ -123,7 +123,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 data:
@@ -132,7 +132,7 @@ data:
       Name: jupyterhub
       Version: 0.9.0
     Release:
-      Name: 0.0.2
+      Name: 0.0.3
       Namespace: cue-lang-demo
       Service: Helm
     auth:
@@ -309,7 +309,12 @@ data:
         registry: null
         username: null
       initContainers: []
-      lifecycleHooks: {}
+      lifecycleHooks:
+        postStart:
+          exec:
+            command:
+            - bash
+            - /etc/populate_home.sh
       memory:
         guarantee: 1G
         limit: null
@@ -1010,7 +1015,7 @@ metadata:
   labels:
     component: user-scheduler
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 data:
@@ -1024,7 +1029,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -1038,11 +1043,11 @@ spec:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: 0.0.2-user-scheduler-complementary
+  name: 0.0.3-user-scheduler-complementary
   labels:
     component: user-scheduler-complementary
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 rules:
@@ -1064,11 +1069,11 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: 0.0.2-user-scheduler-base
+  name: 0.0.3-user-scheduler-base
   labels:
     component: user-scheduler-base
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 subjects:
@@ -1084,11 +1089,11 @@ roleRef:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: 0.0.2-user-scheduler-complementary
+  name: 0.0.3-user-scheduler-complementary
   labels:
     component: user-scheduler-complementary
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 subjects:
@@ -1097,7 +1102,7 @@ subjects:
     namespace: cue-lang-demo
 roleRef:
   kind: ClusterRole
-  name: 0.0.2-user-scheduler-complementary
+  name: 0.0.3-user-scheduler-complementary
   apiGroup: rbac.authorization.k8s.io
 ---
 # Source: jupyterhub/templates/hub/rbac.yaml
@@ -1108,7 +1113,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 rules:
@@ -1127,7 +1132,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 subjects:
@@ -1147,7 +1152,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
   annotations:
@@ -1158,7 +1163,7 @@ spec:
   selector:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
   ports:
     - protocol: TCP
       port: 8081
@@ -1172,14 +1177,14 @@ metadata:
   labels:
     component: proxy-api
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
   selector:
     component: proxy
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
   ports:
     - protocol: TCP
       port: 8001
@@ -1193,14 +1198,14 @@ metadata:
   labels:
     component: proxy-public
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
   selector:
     # TODO: Refactor to utilize the helpers
     component: proxy
-    release: 0.0.2
+    release: 0.0.3
   ports:
     - name: https
       port: 443
@@ -1221,7 +1226,7 @@ metadata:
   labels:
     component: continuous-image-puller
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -1229,7 +1234,7 @@ spec:
     matchLabels:
       component: continuous-image-puller
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
@@ -1239,7 +1244,7 @@ spec:
       labels:
         component: continuous-image-puller
         app: jupyterhub
-        release: 0.0.2
+        release: 0.0.3
     spec:
       tolerations:
         - key: hub.jupyter.org_dedicated
@@ -1279,7 +1284,7 @@ metadata:
   labels:
     component: hub
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -1288,7 +1293,7 @@ spec:
     matchLabels:
       component: hub
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
   strategy:
     type: Recreate
   template:
@@ -1296,14 +1301,14 @@ spec:
       labels:
         component: hub
         app: jupyterhub
-        release: 0.0.2
+        release: 0.0.3
         hub.jupyter.org/network-access-proxy-api: "true"
         hub.jupyter.org/network-access-proxy-http: "true"
         hub.jupyter.org/network-access-singleuser: "true"
       annotations:
         # This lets us autorestart when the secret changes!
-        checksum/config-map: ff050834d16a9792f1ff60b1a472934a9f95b0b2b12fe36e542921adc0d015d9
-        checksum/secret: c2eb4ea2c8d4d5fa1e77b82a967cb2ffad6207920792847e2d5a69c73d84842f
+        checksum/config-map: 979e3841325eb68f2807d6ab504024b4c41a1fdd6961bd6178bc934133cfd8dd
+        checksum/secret: faec55f2ba0daa52d342a575de41105b294f3a8ca95a63be35bdaee3dedd17d5
     spec:
       nodeSelector: {}
       affinity:
@@ -1364,7 +1369,7 @@ spec:
             - name: PYTHONUNBUFFERED
               value: "1"
             - name: HELM_RELEASE_NAME
-              value: "0.0.2"
+              value: "0.0.3"
             - name: POD_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -1392,7 +1397,7 @@ metadata:
   labels:
     component: proxy
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -1401,7 +1406,7 @@ spec:
     matchLabels:
       component: proxy
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
   strategy:
     rollingUpdate: null
     type: Recreate
@@ -1410,12 +1415,12 @@ spec:
       labels:
         component: proxy
         app: jupyterhub
-        release: 0.0.2
+        release: 0.0.3
         hub.jupyter.org/network-access-hub: "true"
         hub.jupyter.org/network-access-singleuser: "true"
       annotations:
         # This lets us autorestart when the secret changes!
-        checksum/hub-secret: 8cd6f7d5dc2fbf60bc92b5fb8a88820e8443d2b2ad02bb6e9b6bc5138e32e3b8
+        checksum/hub-secret: 95bd9a191633b8fbddfc1a62042f871bb435642cc4211331af521d80ed750977
         checksum/proxy-secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
     spec:
       terminationGracePeriodSeconds: 60
@@ -1481,7 +1486,7 @@ metadata:
   labels:
     component: user-scheduler
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -1490,16 +1495,16 @@ spec:
     matchLabels:
       component: user-scheduler
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
   template:
     metadata:
       labels:
         component: user-scheduler
         app: jupyterhub
-        release: 0.0.2
+        release: 0.0.3
       annotations:
         # This lets us autorestart when the configmap changes!
-        checksum/config-map: 0fb37e41ccf75c45cf647a5b894c7426354ecca71d8652922e0dbe6aec5aaebb
+        checksum/config-map: 0d486c055418170f760bc10593a175c7274cb3f9081dce4d13c0f668ed62238e
     spec:
       serviceAccountName: user-scheduler
       nodeSelector: {}
@@ -1517,7 +1522,7 @@ spec:
           image: gcr.io/google_containers/kube-scheduler-amd64:v1.13.12
           command:
             - /usr/local/bin/kube-scheduler
-            - --scheduler-name=0.0.2-user-scheduler
+            - --scheduler-name=0.0.3-user-scheduler
             - --policy-configmap=user-scheduler
             - --policy-configmap-namespace=cue-lang-demo
             - --lock-object-name=user-scheduler
@@ -1546,7 +1551,7 @@ metadata:
   labels:
     component: user-placeholder
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
 spec:
@@ -1556,16 +1561,16 @@ spec:
     matchLabels:
       component: user-placeholder
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
   serviceName: "user-placeholder"
   template:
     metadata:
       labels:
         component: user-placeholder
         app: jupyterhub
-        release: 0.0.2
+        release: 0.0.3
     spec:
-      schedulerName: 0.0.2-user-scheduler
+      schedulerName: 0.0.3-user-scheduler
       tolerations:
         - key: hub.jupyter.org_dedicated
           operator: Equal
@@ -1602,7 +1607,7 @@ metadata:
   labels:
     component: image-puller
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
     hub.jupyter.org/deletable: "true"
@@ -1619,7 +1624,7 @@ metadata:
   labels:
     component: image-puller
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
     hub.jupyter.org/deletable: "true"
@@ -1640,7 +1645,7 @@ metadata:
   labels:
     component: image-puller
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
     hub.jupyter.org/deletable: "true"
@@ -1665,7 +1670,7 @@ metadata:
   labels:
     component: hook-image-puller
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
     hub.jupyter.org/deletable: "true"
@@ -1678,7 +1683,7 @@ spec:
     matchLabels:
       component: hook-image-puller
       app: jupyterhub
-      release: 0.0.2
+      release: 0.0.3
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
@@ -1688,7 +1693,7 @@ spec:
       labels:
         component: hook-image-puller
         app: jupyterhub
-        release: 0.0.2
+        release: 0.0.3
     spec:
       tolerations:
         - key: hub.jupyter.org_dedicated
@@ -1728,7 +1733,7 @@ metadata:
   labels:
     component: image-puller
     app: jupyterhub
-    release: 0.0.2
+    release: 0.0.3
     chart: jupyterhub-0.9.0
     heritage: Helm
     hub.jupyter.org/deletable: "true"
@@ -1742,7 +1747,7 @@ spec:
       labels:
         component: image-puller
         app: jupyterhub
-        release: 0.0.2
+        release: 0.0.3
     spec:
       restartPolicy: Never
       serviceAccountName: hook-image-awaiter

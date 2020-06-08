@@ -4,4 +4,7 @@ singleuser:
   image:
     name: "aleksandergondek/bash-nix-notebook" 
     tag: "latest"
-
+  lifecycleHooks:
+    postStart:
+      exec:
+        command: ["bash", "/etc/populate_home.sh"]

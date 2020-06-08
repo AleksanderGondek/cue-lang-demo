@@ -10,10 +10,10 @@ RUN mkdir /nix
 RUN chown $NB_UID:users /nix
 
 USER $NB_UID
+
 ENV USER=$NB_USER
 
-RUN curl https://nixos.org/nix/install > install.sh
-RUN bash ./install.sh --no-daemon
-RUN echo 'source /home/jovyan/.nix-profile/etc/profile.d/nix.sh' >> /home/jovyan/.bashrc
+RUN curl https://nixos.org/nix/install > install.sh && bash ./install.sh --no-daemon
+COPY populate_home.sh /etc/
 
-RUN pip install --no-cache-dir bash_kernel==0.7.2
+RUN pip install --no-cache-dir bash_kernel==0.7.2 && python -m bash_kernel.install

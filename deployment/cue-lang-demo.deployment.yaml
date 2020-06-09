@@ -167,7 +167,7 @@ data:
       allowNamedServers: false
       annotations: {}
       authenticatePrometheus: null
-      baseUrl: /
+      baseUrl: /cue-lang-demo
       concurrentSpawnLimit: 64
       consecutiveFailureLimit: 5
       db:
@@ -1157,7 +1157,7 @@ metadata:
     heritage: Helm
   annotations:
     prometheus.io/scrape: "true"
-    prometheus.io/path: /hub/metrics
+    prometheus.io/path: /cue-lang-demohub/metrics
 spec:
   type: ClusterIP
   selector:
@@ -1307,7 +1307,7 @@ spec:
         hub.jupyter.org/network-access-singleuser: "true"
       annotations:
         # This lets us autorestart when the secret changes!
-        checksum/config-map: d2cae0b671f95108b92ceea8df0211ee7f35aa4a09b8ae473a37799819a2d949
+        checksum/config-map: 98789caa5595b17ec6b6a8d3ff1c0601af83cbe18c3713af244f63e415b8866e
         checksum/secret: d442b9093a23c7a0fac989601985b8e42d1ff5502fdba190fb9024c4bfccabbc
     spec:
       nodeSelector: {}
@@ -1386,7 +1386,7 @@ spec:
             initialDelaySeconds: 0
             periodSeconds: 10
             httpGet:
-              path: /hub/health
+              path: /cue-lang-demo/hub/health
               port: hub
 ---
 # Source: jupyterhub/templates/proxy/deployment.yaml
@@ -1598,6 +1598,40 @@ spec:
           resources:
             requests:
               memory: 1G
+---
+# Source: jupyterhub/templates/ingress.yaml
+## FUTURE: When k8s 1.20 is released or when we can assume k8s 1.14, switch from
+##         apiVersion: extensions/v1beta1 to using apiVersion:
+##         networking.k8s.io/v1beta1.
+##
+## ref: https://kubernetes.io/blog/2019/07/18/api-deprecations-in-1-16/
+##
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jupyterhub
+  labels:
+    component: ingress
+    app: jupyterhub
+    release: 0.0.4
+    chart: jupyterhub-0.9.0
+    heritage: Helm
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+spec:
+  rules:
+    - host: "blackwood"
+      http:
+        paths:
+          - path: /cue-lang-demo
+            backend:
+              serviceName: proxy-public
+              servicePort: 80
+  tls:
+    - hosts:
+      - blackwood
 ---
 # Source: jupyterhub/templates/image-puller/rbac.yaml
 apiVersion: v1

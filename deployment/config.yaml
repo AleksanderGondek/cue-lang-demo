@@ -1,3 +1,17 @@
+hub:
+  baseUrl: "/cue-lang-demo"
+ingress:
+  enabled: true
+  annotations: {
+    "nginx.ingress.kubernetes.io/proxy-body-size": "0",
+    "nginx.ingress.kubernetes.io/proxy-read-timeout": "600",
+    "nginx.ingress.kubernetes.io/proxy-send-timeout": "600"
+  }
+  hosts: ["blackwood"]
+  pathSuffix: ""
+  tls: 
+  - hosts:
+    - "blackwood"
 proxy:
   secretToken: "80e75bb042ce5126060cb387eb82076f820065fcc63f35fbf1fa0d59ef7b925d"
 singleuser:
@@ -8,4 +22,3 @@ singleuser:
     postStart:
       exec:
         command: ["bash", "/usr/local/bin/populate_home_with_notebooks.sh"]
-

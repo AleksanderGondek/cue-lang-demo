@@ -19,7 +19,3 @@ if [ ! -d /home/jovyan/.nix-defexpr ]; then
 fi
 
 echo "source /home/jovyan/.nix-profile/etc/profile.d/nix.sh" >> /home/jovyan/.bashrc
-
-if [ ! -d /home/jovyan/cue-lang-demo ]; then
-  git -c http.sslVerify=false clone https://github.com/AleksanderGondek/cue-lang-demo.git /home/jovyan/cue-lang-demo
-fi

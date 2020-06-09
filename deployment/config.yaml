@@ -2,9 +2,10 @@ proxy:
   secretToken: "80e75bb042ce5126060cb387eb82076f820065fcc63f35fbf1fa0d59ef7b925d"
 singleuser:
   image:
-    name: "aleksandergondek/bash-nix-notebook" 
-    tag: "latest"
+    name: "aleksandergondek/jupyter-docker-stacks" 
+    tag: "cue"
   lifecycleHooks:
     postStart:
       exec:
-        command: ["bash", "/etc/populate_home.sh"]
+        command: ["bash", "/etc/populate_home_with_notebooks.sh"]
+

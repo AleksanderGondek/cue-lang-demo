@@ -17,14 +17,22 @@ pkgs.mkShell {
 
   buildInputs = with pkgs; [
     unstable.kubernetes-helm
+    # Cue is in quite old version on unstable channel
+    #unstable.cue
     busybox
     docker
-    ranger
+    python38Full
+    python38Packages.bash_kernel
+    python38Packages.jupyterlab
   ];
 
   shellHook = ''
     rm -f ./custom-notebook-img/cue
     tar -zxvf ${latest_cue} cue
     mv ./cue ./custom-notebook-img/cue
+
+    python -m bash_kernel.install
+
+    export PATH=$PATH:$(pwd)/custom-notebook-img
   '';
 }

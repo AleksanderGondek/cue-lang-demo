@@ -8,7 +8,7 @@ helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
 helm repo update
 
 helm template jupyterhub/jupyterhub \
-  --name-template '0.0.4' \
+  --name-template '0.0.5' \
   --namespace 'cue-lang-demo' \
   --values ./config.yaml \
   > ./cue-lang-demo.deployment.yaml

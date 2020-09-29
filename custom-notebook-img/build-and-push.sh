@@ -9,6 +9,3 @@ docker push aleksandergondek/jupyter-docker-stacks:bash
 
 docker build --no-cache -t aleksandergondek/jupyter-docker-stacks:cue -f notebook-cue.dockerfile .
 docker push aleksandergondek/jupyter-docker-stacks:cue
-
-docker build --no-cache -t aleksandergondek/jupyter-docker-stacks:nix -f notebook-nix.dockerfile .
-docker push aleksandergondek/jupyter-docker-stacks:nix
